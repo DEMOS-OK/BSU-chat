@@ -21,6 +21,7 @@ defineProps({
                 ></ChatsBar>
                 <MessagesBar
                     :messages="selectedChat.messages"
+                    :selected-chat="selectedChat"
                     :user="user"
                 ></MessagesBar>
             </div>

@@ -10,6 +10,13 @@ use Illuminate\Database\Eloquent\Collection;
 final class GetSelectedChat
 {
     /**
+     * @param int $countOnPage
+     */
+    public function __construct(private readonly int $countOnPage)
+    {
+    }
+
+    /**
      * Returns selected user chat
      *
      * @param Collection $chats
@@ -24,12 +31,22 @@ final class GetSelectedChat
             return null;
         }
 
-        $selectedChat->load([
-            'messages' => static function ($q) {
-                $q->orderBy('id', 'desc');
+        return $this->loadLastMessages($selectedChat);
+    }
+
+    /**
+     * Load last related messages
+     *
+     * @param Chat $chat
+     * @return Chat
+     */
+    private function loadLastMessages(Chat $chat): Chat
+    {
+        $countOnPage = $this->countOnPage;
+        return $chat->load([
+            'messages' => static function ($q) use ($countOnPage) {
+                $q->limit($countOnPage)->orderBy('id', 'desc');
             }
         ]);
-
-        return $selectedChat;
     }
 }

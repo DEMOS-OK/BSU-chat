@@ -28,7 +28,7 @@ final class IndexController extends Controller
         GetSelectedChat $getSelectedChat
     ): Response {
         $chats = $getChatsForUser(Auth::user()->id);
-        
+
         return Inertia::render('Dashboard', [
             'chats' => $chats,
             'selectedChat' => $getSelectedChat($chats, (int)$request->get('chat_id')),
