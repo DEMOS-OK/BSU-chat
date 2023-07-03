@@ -4,10 +4,17 @@ defineProps({
     author: String,
     text: String,
     date: String,
+    userIsAuthor: Boolean,
+    addClass: String,
 });
 </script>
 <template>
-    <div class="bg-green-200 rounded-md py-2 px-4 text-sm w-1/2">
+    <div
+        :class="[
+            'bg-gray-100 rounded-md py-2 px-4 text-sm w-1/2 shadow-md',
+            addClass,
+        ]"
+    >
         <p class="font-bold">{{ author }}</p>
         <p>{{ text }}</p>
         <div class="flex justify-end text-gray-500 font-light italic">

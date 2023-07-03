@@ -5,13 +5,18 @@ defineProps({
 </script>
 
 <template>
-    <div :class="['page-block bg-white p-4 rounded shadow-md', addClass]">
+    <div
+        :class="[
+            'bg-white p-4 rounded shadow-md overflow-x-scroll page-block',
+            addClass,
+        ]"
+    >
         <slot></slot>
     </div>
 </template>
 
 <style scoped>
 .page-block {
-    min-height: 700px;
+    height: 600px;
 }
 </style>

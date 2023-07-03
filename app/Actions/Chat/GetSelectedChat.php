@@ -24,7 +24,11 @@ final class GetSelectedChat
             return null;
         }
 
-        $selectedChat->load('messages');
+        $selectedChat->load([
+            'messages' => static function ($q) {
+                $q->orderBy('id', 'desc');
+            }
+        ]);
 
         return $selectedChat;
     }
