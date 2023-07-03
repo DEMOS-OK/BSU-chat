@@ -1,22 +1,29 @@
 <script setup>
-import AppLayout from '@/Layouts/AppLayout.vue';
-import Welcome from '@/Components/Welcome.vue';
+import AppLayout from "@/Layouts/AppLayout.vue";
+import Container from "@/Components/Container.vue";
+import ChatsBar from "@/Components/Chat/ChatsBar.vue";
+import MessagesBar from "@/Components/Chat/MessagesBar.vue";
+
+defineProps({
+    user: Array,
+    chats: Array,
+    selectedChat: Object,
+});
 </script>
 
 <template>
-    <AppLayout title="Dashboard">
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Dashboard
-            </h2>
-        </template>
-
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                    <Welcome />
-                </div>
+    <AppLayout title="Home">
+        <Container>
+            <div class="flex sm:flex-col md:flex-row gap-5 py-10">
+                <ChatsBar
+                    :chats="chats"
+                    :selected-chat="selectedChat"
+                ></ChatsBar>
+                <MessagesBar
+                    :messages="selectedChat.messages"
+                    :user="user"
+                ></MessagesBar>
             </div>
-        </div>
+        </Container>
     </AppLayout>
 </template>

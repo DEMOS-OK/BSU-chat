@@ -12,6 +12,50 @@
 
 namespace App\Models{
 /**
+ * App\Models\Chat
+ *
+ * @property int $id
+ * @property string $title
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Database\Factories\ChatFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Chat newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Chat newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Chat query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Chat whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Chat whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Chat whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Chat whereUpdatedAt($value)
+ */
+	final class Chat extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\Message
+ *
+ * @property int $id
+ * @property string $text
+ * @property int|null $user_id
+ * @property int $chat_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @method static \Database\Factories\MessageFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Message newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Message newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Message query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Message whereChatId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Message whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Message whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Message whereText($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Message whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Message whereUserId($value)
+ */
+	final class Message extends \Eloquent {}
+}
+
+namespace App\Models{
+/**
  * App\Models\Permission
  *
  * @property int $id
