@@ -20,7 +20,7 @@ class UserInChat
     public function handle(Request $request, Closure $next): Response
     {
         $chat = Chat::findOrFail((int)$request->input('chat_id'));
-        if (!Gate::allows('load-more-messages', $chat)) {
+        if (!Gate::allows('user-in-chat', $chat)) {
             abort(403, 'Access denied');
         }
 

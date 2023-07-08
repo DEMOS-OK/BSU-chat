@@ -23,7 +23,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::define('load-more-messages', static function (User $user, Chat $chat) {
+        Gate::define('user-in-chat', static function (User $user, Chat $chat) {
             return $chat->users->pluck('id')->contains($user->id);
         });
     }

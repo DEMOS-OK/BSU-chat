@@ -3,10 +3,8 @@
 namespace App\Http\Requests\Message;
 
 use App\Actions\Chat\DTO\GetMessagesForChatDTO;
-use App\Models\Chat;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Gate;
 
 class LoadMoreRequest extends FormRequest
 {
@@ -15,8 +13,7 @@ class LoadMoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        $chat = Chat::findOrFail((int)$this->input('chat_id'));
-        return Gate::allows('load-more-messages', $chat);
+        return true;
     }
 
     /**
