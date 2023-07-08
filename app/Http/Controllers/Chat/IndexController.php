@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Chat;
 
+use App\Actions\Chat\DTO\GetMessagesForChatDTO;
 use App\Actions\Chat\GetChatsForUser;
+use App\Actions\Chat\GetMessagesForChat;
 use App\Actions\Chat\GetSelectedChat;
 use App\Http\Controllers\Controller;
 use Auth;
@@ -20,18 +22,27 @@ final class IndexController extends Controller
      * @param Request $request
      * @param GetChatsForUser $getChatsForUser
      * @param GetSelectedChat $getSelectedChat
+     * @param GetMessagesForChat $getMessagesForChat
      * @return Response
      */
     public function index(
         Request $request,
         GetChatsForUser $getChatsForUser,
-        GetSelectedChat $getSelectedChat
+        GetSelectedChat $getSelectedChat,
+        GetMessagesForChat $getMessagesForChat,
     ): Response {
+        // Get all chats and selected chat
         $chats = $getChatsForUser(Auth::user()->id);
+        $selectedChat = $getSelectedChat($chats, (int)$request->get('chat_id'));
+
+        // Get messages if selected chat exists
+        $getMessagesDTO = new GetMessagesForChatDTO($selectedChat?->id);
+        $messages = $getMessagesForChat($getMessagesDTO);
 
         return Inertia::render('Dashboard', [
             'chats' => $chats,
-            'selectedChat' => $getSelectedChat($chats, (int)$request->get('chat_id')),
+            'selectedChat' => $selectedChat,
+            'messages' => $messages,
             'user' => Auth::user(),
         ]);
     }

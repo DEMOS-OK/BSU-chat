@@ -1,7 +1,7 @@
 <script setup>
 import ChatBlock from "@/Components/Chat/ChatBlock.vue";
 import Message from "@/Components/Chat/Message.vue";
-import { Input } from "flowbite-vue";
+import { Button, Input } from "flowbite-vue";
 import MessagesIcon from "@/Components/Chat/MessagesIcon.vue";
 import Preloader from "@/Components/Preloader.vue";
 
@@ -25,6 +25,8 @@ defineProps({
         <div v-if="this.showMessagesPreloader" class="flex justify-center mt-5">
             <Preloader />
         </div>
+
+        <!-- Messages block -->
         <ChatBlock
             id="scrollContainer"
             add-class="rounded-b-none shadow-none"
@@ -36,7 +38,7 @@ defineProps({
                     :add-class="
                         user.id === message.user_id
                             ? 'ml-auto bg-blue-300 text-black'
-                            : ''
+                            : 'bg-gray-100'
                     "
                     :author="message.author"
                     :date="message.created_at"
@@ -45,14 +47,22 @@ defineProps({
                 />
             </div>
         </ChatBlock>
-        <div class="h-[100px] bg-white p-4 flex items-center">
-            <Input class="w-full" placeholder="Enter the message..." />
+
+        <!-- Message entering block -->
+        <div class="h-[100px] bg-white p-4 flex items-center gap-3">
+            <Input
+                class="w-full"
+                placeholder="Enter the message..."
+                @keyup="setMessageText"
+            />
+            <Button color="dark" @click="sendMessage">Send</Button>
         </div>
     </div>
 </template>
 
 <script>
 import loadMoreMessages from "@/API/Message/loadMoreMessages.js";
+import createMessage from "@/API/Message/createMessage.js";
 
 export default {
     mounted() {
@@ -60,9 +70,13 @@ export default {
     },
     data() {
         return {
+            // Chat properties
             step: 0,
-            messagesState: this.messages,
+            messagesState: this.messages.reverse(),
             showMessagesPreloader: false,
+
+            // Message panel properties
+            messageText: null,
         };
     },
     methods: {
@@ -72,6 +86,13 @@ export default {
         scrollToBottom() {
             const container = this.$el.querySelector("#scrollContainer");
             container.scrollTop = container.scrollHeight;
+        },
+
+        /**
+         * Set state of the message text
+         */
+        setMessageText(e) {
+            this.messageText = e.target.value;
         },
 
         /**
@@ -97,9 +118,27 @@ export default {
                     for (let message of response.data.messages) {
                         this.messagesState.unshift(message);
                     }
-                    this.$el.querySelector("#scrollContainer").focus();
+                    window.location.hash = "#scrollContainer";
                     this.showMessagesPreloader = false;
                 }
+            );
+        },
+
+        /**
+         * Send async request to create a message
+         */
+        sendMessage() {
+            createMessage(
+                this.messageText,
+                this.user.id,
+                this.selectedChat.id
+            ).then((response) => {
+                if (response.data.success) {
+                    this.messagesState = response.data.messages.reverse();
+                }
+            });
+            loadMoreMessages(this.selectedChat.id, this.step).then(
+                (response) => {}
             );
         },
     },

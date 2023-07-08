@@ -7,7 +7,7 @@
  */
 const loadMoreMessages = async (chatId, step = 0) => {
     return axios.get(
-        route("api.messages.load-more", {
+        route("messages.load-more", {
             chat_id: chatId,
             step: step,
         })

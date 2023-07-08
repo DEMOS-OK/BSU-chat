@@ -9,12 +9,7 @@ defineProps({
 });
 </script>
 <template>
-    <div
-        :class="[
-            'bg-gray-100 rounded-md py-2 px-4 text-sm w-1/2 shadow-md',
-            addClass,
-        ]"
-    >
+    <div :class="['rounded-md py-2 px-4 text-sm w-1/2 shadow-md', addClass]">
         <p class="font-bold">{{ author }}</p>
         <p>{{ text }}</p>
         <div class="flex justify-end text-gray-500 font-light italic">

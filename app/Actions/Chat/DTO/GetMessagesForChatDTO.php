@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions\Chat\DTO;
 
-final class LoadMoreMessagesDTO
+final class GetMessagesForChatDTO
 {
     /**
      * @var int
@@ -12,14 +12,14 @@ final class LoadMoreMessagesDTO
     private int $step = 0;
 
     /**
-     * @var int
+     * @var int|null
      */
-    private int $chatId;
+    private ?int $chatId;
 
     /**
-     * @param int $chatId
+     * @param int|null $chatId
      */
-    public function __construct(int $chatId)
+    public function __construct(?int $chatId = null)
     {
         $this->chatId = $chatId;
     }

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Actions\Chat;
 
-use App\Actions\Chat\DTO\LoadMoreMessagesDTO;
+use App\Actions\Chat\DTO\GetMessagesForChatDTO;
 use App\Models\Message;
 use Illuminate\Database\Eloquent\Collection;
 
-final class GetMoreMessages
+final class GetMessagesForChat
 {
     public function __construct(private readonly int $countOnPage)
     {
@@ -17,16 +17,15 @@ final class GetMoreMessages
     /**
      * Returns next messages slice
      *
-     * @param LoadMoreMessagesDTO $data
+     * @param GetMessagesForChatDTO $data
      * @return Collection
      */
-    public function __invoke(LoadMoreMessagesDTO $data): Collection
+    public function __invoke(GetMessagesForChatDTO $data): Collection
     {
         $query = Message::query()->where('chat_id', $data->getChatId());
 
         $toSkip = $data->getStep() * $this->countOnPage;
-
-        return $query->skip($toSkip)->take($this->countOnPage)
-            ->orderBy('id', 'desc')->get();
+        return $query->orderBy('id', 'desc')
+            ->skip($toSkip)->take($this->countOnPage)->get();
     }
 }

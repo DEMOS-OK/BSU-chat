@@ -8,6 +8,7 @@ defineProps({
     user: Array,
     chats: Array,
     selectedChat: Object,
+    messages: Array,
 });
 </script>
 
@@ -20,7 +21,7 @@ defineProps({
                     :selected-chat="selectedChat"
                 ></ChatsBar>
                 <MessagesBar
-                    :messages="selectedChat.messages"
+                    :messages="messages"
                     :selected-chat="selectedChat"
                     :user="user"
                 ></MessagesBar>

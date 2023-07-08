@@ -2,9 +2,11 @@
 
 namespace App\Http\Requests\Message;
 
-use App\Actions\Chat\DTO\LoadMoreMessagesDTO;
+use App\Actions\Chat\DTO\GetMessagesForChatDTO;
+use App\Models\Chat;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class LoadMoreRequest extends FormRequest
 {
@@ -13,7 +15,8 @@ class LoadMoreRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        $chat = Chat::findOrFail((int)$this->input('chat_id'));
+        return Gate::allows('load-more-messages', $chat);
     }
 
     /**
@@ -25,20 +28,20 @@ class LoadMoreRequest extends FormRequest
     {
         return [
             'step' => 'integer|nullable',
-            'chat_id' => 'integer|required'
+            'chat_id' => 'integer|required|exists:App\Models\Chat,id'
         ];
     }
 
     /**
      * Returns data transfer object from request data
      *
-     * @return LoadMoreMessagesDTO
+     * @return GetMessagesForChatDTO
      */
-    public function data(): LoadMoreMessagesDTO
+    public function data(): GetMessagesForChatDTO
     {
         $data = $this->input();
 
-        $dto = new LoadMoreMessagesDTO($data['chat_id']);
+        $dto = new GetMessagesForChatDTO($data['chat_id']);
         if (!empty($data['step'])) {
             $dto->setStep($data['step']);
         }
