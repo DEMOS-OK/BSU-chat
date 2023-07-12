@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Chat\API\ChatController;
 use App\Http\Controllers\Chat\API\MessageController;
+use App\Http\Controllers\Chat\API\UserController;
 use App\Http\Controllers\Chat\IndexController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -37,5 +39,11 @@ Route::middleware([
         Route::get('/load_more/', [MessageController::class, 'loadMore'])
             ->name('messages.load-more');
         Route::post('/send/', [MessageController::class, 'store'])->name('message.store');
+    });
+
+    Route::get('/search-users', [UserController::class, 'search'])->name('search-users');
+
+    Route::prefix('/chat')->group(static function () {
+        Route::post('/store', [ChatController::class, 'store'])->name('chat.store');
     });
 });

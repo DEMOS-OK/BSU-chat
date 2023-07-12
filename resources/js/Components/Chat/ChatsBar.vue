@@ -1,6 +1,6 @@
 <script setup>
 import ChatBlock from "@/Components/Chat/ChatBlock.vue";
-import { Input, ListGroup, ListGroupItem } from "flowbite-vue";
+import { Button, Input, ListGroup, ListGroupItem } from "flowbite-vue";
 import ChatIcon from "@/Components/Chat/ChatIcon.vue";
 import { Link } from "@inertiajs/vue3";
 
@@ -8,18 +8,24 @@ defineProps({
     chats: Array,
     selectedChat: Object,
 });
+
+defineEmits(["showModal"]);
 </script>
 
 <template>
     <ChatBlock add-class="sm:w-auto md:w-1/4 ">
-        <div class="flex gap-3 items-center">
-            <ChatIcon></ChatIcon>
-            <p>Chats</p>
+        <div class="flex justify-between">
+            <div class="flex gap-3 items-center">
+                <ChatIcon></ChatIcon>
+                <p>Chats</p>
+            </div>
+
+            <Button color="light" @click="this.$emit('showModal')">Add</Button>
         </div>
-        <div class="mt-7">
+        <div class="mt-3">
             <Input
                 label="Search chat"
-                placeholder="Enter user name"
+                placeholder="Enter chat title"
                 type="text"
             />
         </div>

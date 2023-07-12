@@ -2,9 +2,9 @@
 
 namespace App\Exceptions;
 
-use App\Actions\Chat\Exceptions\MessageSavingException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class Handler extends ExceptionHandler
 {
@@ -24,7 +24,7 @@ class Handler extends ExceptionHandler
      */
     public function register(): void
     {
-        $this->reportable(function (MessageSavingException $e) {
+        $this->reportable(function (Throwable $e) {
             Log::error($e->getMessage());
             abort(500);
         });

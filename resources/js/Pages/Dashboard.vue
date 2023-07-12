@@ -3,13 +3,17 @@ import AppLayout from "@/Layouts/AppLayout.vue";
 import Container from "@/Components/Container.vue";
 import ChatsBar from "@/Components/Chat/ChatsBar.vue";
 import MessagesBar from "@/Components/Chat/MessagesBar.vue";
+import AddChatModal from "@/Components/Chat/AddChatModal.vue";
+import { ref } from "vue";
 
 defineProps({
-    user: Array,
+    user: Object,
     chats: Array,
     selectedChat: Object,
     messages: Array,
 });
+
+let modalForAddingChatIsShowed = ref(false);
 </script>
 
 <template>
@@ -19,6 +23,7 @@ defineProps({
                 <ChatsBar
                     :chats="chats"
                     :selected-chat="selectedChat"
+                    @show-modal="modalForAddingChatIsShowed = true"
                 ></ChatsBar>
                 <MessagesBar
                     :messages="messages"
@@ -28,4 +33,8 @@ defineProps({
             </div>
         </Container>
     </AppLayout>
+    <AddChatModal
+        :is-showed="modalForAddingChatIsShowed"
+        :on-close-handler="() => (modalForAddingChatIsShowed = false)"
+    ></AddChatModal>
 </template>
