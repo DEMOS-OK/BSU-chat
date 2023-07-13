@@ -23,7 +23,7 @@ defineEmits(["addChat"]);
                 <p>Chats</p>
             </div>
 
-            <Button color="light" @click="this.$emit('addChat')">Add</Button>
+            <Button color="light" @click="$emit('addChat')">Add</Button>
         </div>
         <div class="mt-3">
             <Input

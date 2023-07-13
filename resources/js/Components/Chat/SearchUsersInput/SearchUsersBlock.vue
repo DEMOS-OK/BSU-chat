@@ -20,11 +20,11 @@ defineEmits(["usersSelected"]);
         @input="searchUsers"
     />
     <ListGroup class="w-full mt-2">
-        <div v-for="(user, i) of this.users">
+        <div v-for="(user, i) of users">
             <UserItem
                 :key="i"
                 :name="user.name"
-                :selected="this.selectedUsers.indexOf(user.id) !== -1"
+                :selected="selectedUsers.indexOf(user.id) !== -1"
                 @item-changed="itemChanged(user)"
             />
         </div>

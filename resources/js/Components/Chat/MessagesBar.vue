@@ -23,13 +23,13 @@ defineEmits(["editChat"]);
                 <MessagesIcon />
             </div>
             <p v-if="selectedChat">
-                <a href="#" @click="this.$emit('editChat')">
+                <a href="#" @click="$emit('editChat')">
                     {{ selectedChat.title }}
                 </a>
             </p>
             <p v-else>Messages</p>
         </div>
-        <div v-if="this.showMessagesPreloader" class="flex justify-center mt-5">
+        <div v-if="showMessagesPreloader" class="flex justify-center mt-5">
             <Preloader />
         </div>
 
@@ -41,7 +41,7 @@ defineEmits(["editChat"]);
         >
             <div class="page-block flex flex-col gap-3 mt-5">
                 <Message
-                    v-for="message of this.messagesState"
+                    v-for="message of messagesState"
                     :add-class="
                         user.id === message.user_id
                             ? 'ml-auto bg-blue-300 text-black'

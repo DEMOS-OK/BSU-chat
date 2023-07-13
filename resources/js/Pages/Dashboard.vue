@@ -44,7 +44,7 @@ let modalForEditingChatIsShowed = ref(false);
         :on-close-handler="() => (modalForAddingChatIsShowed = false)"
     ></AddChatModal>
     <EditChatModal
-        :chat="this.selectedChat"
+        :chat="selectedChat"
         :is-showed="modalForEditingChatIsShowed"
         :on-close-handler="() => (modalForEditingChatIsShowed = false)"
     ></EditChatModal>

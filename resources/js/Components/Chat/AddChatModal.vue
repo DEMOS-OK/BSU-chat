@@ -18,7 +18,7 @@ defineProps({
                 placeholder="Enter the chat title"
                 required
                 type="text"
-                @input="this.chatTitle = $event.target.value"
+                @input="chatTitle = $event.target.value"
             />
 
             <SearchUsersInput @users-selected="setSelectedUsers($event)" />

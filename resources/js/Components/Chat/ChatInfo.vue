@@ -16,22 +16,19 @@ defineProps({
         <div class="border-b-2 border-gray-100 px-6 py-3">Chat Info</div>
         <div class="px-6 py-6 flex flex-col gap-3">
             <!-- Chat title block -->
-            <p class="font-bold text-xl">{{ this.title }}</p>
+            <p class="font-bold text-xl">{{ title }}</p>
             <Input
                 class="w-full"
                 placeholder="Enter new chat title"
                 required
                 type="text"
-                @input="this.title = $event.target.value"
+                @input="title = $event.target.value"
             />
 
             <!-- Users block header -->
             <div class="flex items-center justify-between mt-4">
                 <p class="font-bold text-xl">Users</p>
-                <Button
-                    color="dark"
-                    @click="this.addUserMode = !this.addUserMode"
-                >
+                <Button color="dark" @click="addUserMode = !addUserMode">
                     <span v-if="!addUserMode">Add</span>
                     <span v-else>Close</span>
                 </Button>
@@ -39,12 +36,12 @@ defineProps({
 
             <!-- Added users form -->
             <div
-                v-for="user of this.users"
+                v-for="user of users"
                 class="flex justify-between items-center py-3 px-3 shadow-sm"
             >
                 <div>{{ user.name }}</div>
                 <div class="w-6 h-6">
-                    <a href="#" @click="this.deleteUserFromChat(user)">
+                    <a href="#" @click="deleteUserFromChat(user)">
                         <RemoveIcon />
                     </a>
                 </div>
@@ -53,8 +50,8 @@ defineProps({
             <!-- Users search block -->
             <SearchUsersInput
                 v-if="addUserMode"
-                :except="this.newUsers"
-                @users-selected="this.newUsers = $event"
+                :except="newUsers"
+                @users-selected="newUsers = $event"
             />
         </div>
         <div class="bg-gray-100 px-6 py-3">
@@ -72,7 +69,6 @@ import removeUserFromChat from "@/API/Chat/removeUserFromChat.js";
 export default {
     mounted() {
         this.newUsers = this.users.map((u) => u.id);
-        console.log(this.newUsers);
     },
     data() {
         return {
