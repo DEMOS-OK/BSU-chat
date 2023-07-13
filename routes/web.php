@@ -41,9 +41,11 @@ Route::middleware([
         Route::post('/send/', [MessageController::class, 'store'])->name('message.store');
     });
 
-    Route::get('/search-users', [UserController::class, 'search'])->name('search-users');
+    Route::post('/search-users', [UserController::class, 'search'])->name('search-users');
 
     Route::prefix('/chat')->group(static function () {
         Route::post('/store', [ChatController::class, 'store'])->name('chat.store');
+        Route::post('/update', [ChatController::class, 'update'])->name('chat.update');
+        Route::post('/remove-user', [ChatController::class, 'removeUser'])->name('chat.remove-user');
     });
 });

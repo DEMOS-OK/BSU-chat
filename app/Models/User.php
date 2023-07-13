@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -67,5 +68,16 @@ class User extends Authenticatable
     public function chats(): BelongsToMany
     {
         return $this->belongsToMany(Chat::class, 'messages');
+    }
+
+    /**
+     * Scope for users with verified email
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeEmailVerified(Builder $query): Builder
+    {
+        return $query->whereNotNull('email_verified_at');
     }
 }

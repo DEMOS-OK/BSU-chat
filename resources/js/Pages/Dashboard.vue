@@ -5,6 +5,7 @@ import ChatsBar from "@/Components/Chat/ChatsBar.vue";
 import MessagesBar from "@/Components/Chat/MessagesBar.vue";
 import AddChatModal from "@/Components/Chat/AddChatModal.vue";
 import { ref } from "vue";
+import EditChatModal from "@/Components/Chat/ChatInfo.vue";
 
 defineProps({
     user: Object,
@@ -14,6 +15,7 @@ defineProps({
 });
 
 let modalForAddingChatIsShowed = ref(false);
+let modalForEditingChatIsShowed = ref(false);
 </script>
 
 <template>
@@ -23,12 +25,13 @@ let modalForAddingChatIsShowed = ref(false);
                 <ChatsBar
                     :chats="chats"
                     :selected-chat="selectedChat"
-                    @show-modal="modalForAddingChatIsShowed = true"
+                    @add-chat="modalForAddingChatIsShowed = true"
                 ></ChatsBar>
                 <MessagesBar
                     :messages="messages"
                     :selected-chat="selectedChat"
                     :user="user"
+                    @edit-chat="modalForEditingChatIsShowed = true"
                 ></MessagesBar>
             </div>
         </Container>
@@ -37,4 +40,9 @@ let modalForAddingChatIsShowed = ref(false);
         :is-showed="modalForAddingChatIsShowed"
         :on-close-handler="() => (modalForAddingChatIsShowed = false)"
     ></AddChatModal>
+    <EditChatModal
+        :chat="this.selectedChat"
+        :is-showed="modalForEditingChatIsShowed"
+        :on-close-handler="() => (modalForEditingChatIsShowed = false)"
+    ></EditChatModal>
 </template>

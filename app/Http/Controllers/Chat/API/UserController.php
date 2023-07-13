@@ -4,26 +4,24 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Chat\API;
 
+use App\Actions\Chat\SearchUsers;
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Http\Requests\User\SearchRequest;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 final class UserController extends Controller
 {
     /**
      * Searches the users and returns response
      *
-     * @param Request $request
+     * @param SearchRequest $request
+     * @param SearchUsers $searchUsers
      * @return JsonResponse
      */
-    public function search(Request $request): JsonResponse
+    public function search(SearchRequest $request, SearchUsers $searchUsers): JsonResponse
     {
-        $users = User::where('name', 'like', "%" . $request->input('name_query') . "%")
-            ->get();
-
         return response()->json([
-            'users' => $users
+            'users' => $searchUsers($request->data())
         ]);
     }
 }

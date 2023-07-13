@@ -4,8 +4,13 @@ declare(strict_types=1);
 
 namespace App\Actions\Chat\DTO;
 
-final class StoreChatDTO
+final class ManageChatDTO
 {
+    /**
+     * @var int|null
+     */
+    private ?int $chatId = null;
+
     /**
      * @var string
      */
@@ -56,4 +61,20 @@ final class StoreChatDTO
         $this->usersIds = $usersIds;
     }
 
+    /**
+     * @return int|null
+     */
+    public function getChatId(): ?int
+    {
+        return $this->chatId;
+    }
+
+    /**
+     * @param int|null $chatId
+     */
+    public function setChatId(?int $chatId): void
+    {
+        $this->chatId = $chatId;
+    }
+    
 }

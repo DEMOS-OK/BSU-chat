@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Requests\Chat;
+namespace App\Http\Requests\User;
 
-use App\Actions\Chat\DTO\StoreChatDTO;
-use Auth;
+use App\Actions\Chat\DTO\SearchUsersDTO;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRequest extends FormRequest
+class SearchRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,24 +24,25 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'string|required|max:256',
-            'users' => 'array',
-            'users.*' => 'integer',
+            'name_query' => 'string|required|max:256',
+            'except' => 'array|nullable',
+            'except.*' => 'integer',
         ];
     }
 
     /**
      * Create DTO from request data
      *
-     * @return StoreChatDTO
+     * @return SearchUsersDTO
      */
-    public function data(): StoreChatDTO
+    public function data(): SearchUsersDTO
     {
         $data = $this->input();
 
-        $dto = new StoreChatDTO($data['title']);
-        $data['users'][] = Auth::user()->id;
-        $dto->setUsersIds($data['users']);
+        $dto = new SearchUsersDTO($data['name_query']);
+        if (!empty($data['except'])) {
+            $dto->setExcept($data['except']);
+        }
 
         return $dto;
     }

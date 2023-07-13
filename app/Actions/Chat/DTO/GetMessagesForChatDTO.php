@@ -41,9 +41,9 @@ final class GetMessagesForChatDTO
     }
 
     /**
-     * @return int
+     * @return ?int
      */
-    public function getChatId(): int
+    public function getChatId(): ?int
     {
         return $this->chatId;
     }

@@ -2,7 +2,7 @@
 import ChatBlock from "@/Components/Chat/ChatBlock.vue";
 import Message from "@/Components/Chat/Message.vue";
 import { Button, Input } from "flowbite-vue";
-import MessagesIcon from "@/Components/Chat/MessagesIcon.vue";
+import MessagesIcon from "@/Components/Chat/Icons/MessagesIcon.vue";
 import Preloader from "@/Components/Preloader.vue";
 
 defineProps({
@@ -10,6 +10,8 @@ defineProps({
     messages: Array,
     selectedChat: Object,
 });
+
+defineEmits(["editChat"]);
 </script>
 
 <template>
@@ -20,7 +22,11 @@ defineProps({
             <div class="w-7 h-7">
                 <MessagesIcon />
             </div>
-            <p>Messages</p>
+            <p>
+                <a href="#" @click="this.$emit('editChat')">
+                    {{ selectedChat.title }}
+                </a>
+            </p>
         </div>
         <div v-if="this.showMessagesPreloader" class="flex justify-center mt-5">
             <Preloader />
@@ -137,9 +143,7 @@ export default {
                     this.messagesState = response.data.messages.reverse();
                 }
             });
-            loadMoreMessages(this.selectedChat.id, this.step).then(
-                (response) => {}
-            );
+            loadMoreMessages(this.selectedChat.id, this.step);
         },
     },
 };

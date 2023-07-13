@@ -1,7 +1,7 @@
 <script setup>
 import ChatBlock from "@/Components/Chat/ChatBlock.vue";
 import { Button, Input, ListGroup, ListGroupItem } from "flowbite-vue";
-import ChatIcon from "@/Components/Chat/ChatIcon.vue";
+import ChatIcon from "@/Components/Chat/Icons/ChatIcon.vue";
 import { Link } from "@inertiajs/vue3";
 
 defineProps({
@@ -9,7 +9,7 @@ defineProps({
     selectedChat: Object,
 });
 
-defineEmits(["showModal"]);
+defineEmits(["addChat"]);
 </script>
 
 <template>
@@ -20,7 +20,7 @@ defineEmits(["showModal"]);
                 <p>Chats</p>
             </div>
 
-            <Button color="light" @click="this.$emit('showModal')">Add</Button>
+            <Button color="light" @click="this.$emit('addChat')">Add</Button>
         </div>
         <div class="mt-3">
             <Input

@@ -2,6 +2,13 @@
 import { Input, ListGroup } from "flowbite-vue";
 import UserItem from "@/Components/Chat/SearchUsersInput/UserItem.vue";
 
+defineProps({
+    except: {
+        type: Array,
+        required: false,
+    },
+});
+
 defineEmits(["usersSelected"]);
 </script>
 
@@ -42,9 +49,11 @@ export default {
                 return;
             }
 
-            searchUsersByNameQuery(nameQuery).then((response) => {
-                this.users = response.data.users;
-            });
+            searchUsersByNameQuery(nameQuery, this.except ?? []).then(
+                (response) => {
+                    this.users = response.data.users;
+                }
+            );
         },
 
         itemChanged(user) {

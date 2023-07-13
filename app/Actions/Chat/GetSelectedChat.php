@@ -18,7 +18,14 @@ final class GetSelectedChat
      */
     public function __invoke(Collection $chats, int|null $chatId = null): ?Chat
     {
+        /** @var Chat $selectedChat */
         $selectedChat = $chats->where('id', $chatId)->first() ?? $chats->first();
+        $selectedChat?->load([
+            'users' => static function ($query) {
+                $query->emailVerified()->distinct('id');
+            }
+        ]);
+
         return $selectedChat ?? null;
     }
 }
