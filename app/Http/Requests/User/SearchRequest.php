@@ -3,6 +3,7 @@
 namespace App\Http\Requests\User;
 
 use App\Actions\Chat\DTO\SearchUsersDTO;
+use Auth;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -40,9 +41,10 @@ class SearchRequest extends FormRequest
         $data = $this->input();
 
         $dto = new SearchUsersDTO($data['name_query']);
-        if (!empty($data['except'])) {
-            $dto->setExcept($data['except']);
-        }
+
+        $except = $data['except'] ?? [];
+        $except[] = Auth::user()->id;
+        $dto->setExcept($except);
 
         return $dto;
     }

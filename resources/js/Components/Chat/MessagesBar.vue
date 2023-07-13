@@ -22,11 +22,12 @@ defineEmits(["editChat"]);
             <div class="w-7 h-7">
                 <MessagesIcon />
             </div>
-            <p>
+            <p v-if="selectedChat">
                 <a href="#" @click="this.$emit('editChat')">
                     {{ selectedChat.title }}
                 </a>
             </p>
+            <p v-else>Messages</p>
         </div>
         <div v-if="this.showMessagesPreloader" class="flex justify-center mt-5">
             <Preloader />

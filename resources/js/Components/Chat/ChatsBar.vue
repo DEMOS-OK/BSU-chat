@@ -6,7 +6,10 @@ import { Link } from "@inertiajs/vue3";
 
 defineProps({
     chats: Array,
-    selectedChat: Object,
+    selectedChat: {
+        type: Object,
+        required: false,
+    },
 });
 
 defineEmits(["addChat"]);
@@ -29,7 +32,7 @@ defineEmits(["addChat"]);
                 type="text"
             />
         </div>
-        <ListGroup class="w-full mt-2">
+        <ListGroup v-if="chats.length" class="w-full mt-2">
             <Link
                 v-for="chat of chats"
                 :data="{ chat_id: chat.id }"

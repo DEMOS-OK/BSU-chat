@@ -10,7 +10,10 @@ import EditChatModal from "@/Components/Chat/ChatInfo.vue";
 defineProps({
     user: Object,
     chats: Array,
-    selectedChat: Object,
+    selectedChat: {
+        type: Object,
+        required: false,
+    },
     messages: Array,
 });
 
