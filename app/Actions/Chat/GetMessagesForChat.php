@@ -26,6 +26,7 @@ final class GetMessagesForChat
 
         $toSkip = $data->getStep() * $this->countOnPage;
         return $query->orderBy('id', 'desc')
+            ->noRelation()
             ->skip($toSkip)->take($this->countOnPage)->get();
     }
 }

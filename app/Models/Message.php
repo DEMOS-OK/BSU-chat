@@ -66,4 +66,15 @@ final class Message extends Model
     {
         return Carbon::make($value)?->format('Y-m-d H:i');
     }
+
+    /**
+     * Message is not created for Many To Many with User and Chat
+     *
+     * @param $query
+     * @return mixed
+     */
+    public function scopeNoRelation($query): mixed
+    {
+        return $query->where('text', '!=', '');
+    }
 }
