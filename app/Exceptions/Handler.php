@@ -26,7 +26,6 @@ class Handler extends ExceptionHandler
     {
         $this->reportable(function (Throwable $e) {
             Log::error($e->getMessage());
-            abort(500);
         });
     }
 }

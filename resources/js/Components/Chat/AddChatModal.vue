@@ -48,6 +48,11 @@ export default {
 
         async createNewChat() {
             const result = await createChat(this.chatTitle, this.selectedUsers);
+            if (result) {
+                location.reload();
+            } else {
+                alert("Error when creating a chat!");
+            }
         },
     },
 };
