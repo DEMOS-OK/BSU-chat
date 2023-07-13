@@ -19,6 +19,6 @@ final class GetChatsForUser
     {
         return Chat::whereHas('users', static function ($q) use ($userId) {
             $q->where('users.id', $userId);
-        })->get();
+        })->orderBy('id', 'desc')->get();
     }
 }
